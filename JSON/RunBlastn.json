@@ -1,0 +1,11 @@
+{
+  "name" : "coverageBED_2.25.0",
+  "appId" : "coverageBED_2.25.0-0.0.0",
+  "archive" : false,
+  "inputs": {
+    "a_file" :  "http://de.cyverse.org/dl/d/D8944C95-E1BE-4057-AA21-69B11DEA363B/junctions.bed",
+    "b_file" : [ "http://de.cyverse.org/dl/d/D8944C95-E1BE-4057-AA21-69B11DEA363B/junctions.bed" ]
+  },
+  "parameters" : {
+  }
+}
