@@ -59,7 +59,7 @@
         },
       "details": { "label": "Search strategy to use",
         "showArgument": false
-      }},
+      }}
     ],
 
 
@@ -376,8 +376,7 @@
       },
       "details": {
         "label": "SeqId list",
-        "description": "Restrict search of database to list of SeqId's. Incompatible with:  gilist, negative_gilist, subject,
-   subject_loc",
+        "description": "Restrict search of database to list of SeqId's. Incompatible with:  gilist, negative_gilist, subject, subject_loc",
         "showArgument": true,
         "argument": "-seqidlist "
       }
@@ -643,6 +642,6 @@
         "showArgument": true,
         "argument": "-parse_deflines "
       }
-    },
+    }
 ]
 }
