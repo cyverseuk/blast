@@ -298,7 +298,8 @@
     {"id": "dust",
       "value": {
         "type": "string",
-        "visible": true
+        "visible": true,
+        "validator": "^(yes|no|\\d+\\s\\d+\\s\\d+)$"
       },
       "details": {
         "label": "Filter with DUST",
