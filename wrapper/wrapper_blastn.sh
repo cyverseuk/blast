@@ -29,28 +29,51 @@ echo "arguments are " "${ARGSU}"
 echo "inputs are " "${INPUTSU}"
 
 
-if [ -n "${r_overlap}" ]
+if [ -n "${subject}" -o -n "${subject_loc}"] && [ -n "${db}" -o -n "${gilist}" -o -n "${seqidlist}" -o -n "${negative_gilist}" -o -n "${db_soft_mask}" -o -n "${db_hard_mask}" ]
   then
-    if [ -z "${a_overlap}" ]
-      then
-        >&2 echo "-r must be used with -f"
-        debug
-        exit 1;
-    fi
+    >&2 echo "subject is incompatible with: db, gilist, seqidlist, negative_gilist, db_soft_mask, db_hard_mask "
+    debug
+    exit 1;
+fi
+if [ -n "${num_descriptions}" -o -n "${num_alignments}" ] && [ -n "${max_target_seqs}" ]
+  then
+    >&2 echo "num_descriptions and num_alignments are incompatible with max_target_seqs"
+    debug
+    exit 1;
+fi
+if [ -n "${gilist}" ] && [ -n "${negative_gilist}" -o -n "${seqidlist}" ]
+  then
+    >&2 echo "gilist is incompatible with negative_gilist and seqidlist"
+    debug
+    exit 1;
+fi
+if [ -n "${seqidlist}" ] && [ -n "${negative_gilist}" ]
+  then
+    >&2 echo "seqidlist and negative_gilist are incompatible"
+    debug
+    exit 1;
+fi
+if [ -n "${db_soft_mask}" ] && [ -n "${db_hard_mask}" ]
+  then
+    >&2 echo "db_soft_mask and db_hard_mask are incompatible"
+    debug
+    exit 1;
+fi
+if [ -n "${culling_limit}" ] && [ -n "${best_hit_overhang}" -o -n "${best_hit_score_edge}" ]
+  then
+    >&2 echo "culling_limit is incompatible with best_hit_overhang and best_hit_score_edge"
+    debug
+    exit 1;
+fi
+if [ -n "${template_type}" -a -z "${template_length}" ] || [ -n "${template_length}" -a -z "${template_type}" ]
+  then
+    >&2 echo "template_type and template_length are mutually required"
+    debug
+    exit 1;
 fi
 
-if [ -n "${e_overlap}" ]
-  then
-    if [ -z "${a_overlap}" ]
-      then
-        >&2 echo "-r must be used with -f"
-        debug
-        exit 1;
-    fi
-fi
 
 CMDLINEARG=""
-######add check for mutually exclusive inputs and parameters here and exit in case of errors
 CMDLINEARG+="blastn ${ARGSU} "
 if [ -n "${BLASTDBU}" ]
   then
@@ -63,7 +86,7 @@ fi
 if [ -n "${SEARCHU}" ]
   then
     CMDLINEARG+="-import_search_strategy ${SEARCHU} "
-CMDLINEARG+="-query ${QUERYU} "
+CMDLINEARG+="-query ${QUERYU} -out output "
 echo ${CMDLINEARG};
 chmod +x launch.sh
 
