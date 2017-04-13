@@ -222,7 +222,7 @@
       "value": {
         "type": "string",
         "visible": true,
-        "default": 0
+        "default": "0"
       },
       "details": {
         "label": "Alignment view option",
@@ -530,9 +530,9 @@
         "type": "enumeration",
         "visible": true,
         "enumValues": [
-          16,
-          18,
-          21
+          "16",
+          "18",
+          "21"
         ]
       },
       "details": {
