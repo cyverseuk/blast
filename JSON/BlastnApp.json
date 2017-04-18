@@ -38,7 +38,7 @@
       "default": ""
       },
     "details": { "label": "BLAST database.",
-      "description": "incompatible with: subject, subject_loc",
+      "description": "NAME FOLDER AS DB BASE NAME. Incompatible with: subject, subject_loc",
       "showArgument": false
     }},
       {"id": "subject",

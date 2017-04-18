@@ -1,10 +1,10 @@
 {
-  "name" : "coverageBED_2.25.0",
-  "appId" : "coverageBED_2.25.0-0.0.0",
+  "name" : "blastn_2.2.31",
+  "appId" : "blastn_2.2.31-0.0.0",
   "archive" : false,
   "inputs": {
-    "a_file" :  "http://de.cyverse.org/dl/d/D8944C95-E1BE-4057-AA21-69B11DEA363B/junctions.bed",
-    "b_file" : [ "http://de.cyverse.org/dl/d/D8944C95-E1BE-4057-AA21-69B11DEA363B/junctions.bed" ]
+    "query" :  "http://de.cyverse.org/dl/d/94E27B1A-89A0-4EF9-A14A-8CF330D70AED/chr5.fas",
+    "blast_db" : [ "agave://cyverseUK-Storage2/rosysnake/16SMicrobial" ]
   },
   "parameters" : {
   }
