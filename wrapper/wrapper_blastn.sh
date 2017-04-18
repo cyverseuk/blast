@@ -29,7 +29,7 @@ echo "arguments are " "${ARGSU}"
 echo "inputs are " "${INPUTSU}"
 
 
-if [ -n "${subject}" -o -n "${subject_loc}"] && [ -n "${db}" -o -n "${gilist}" -o -n "${seqidlist}" -o -n "${negative_gilist}" -o -n "${db_soft_mask}" -o -n "${db_hard_mask}" ]
+if [ -n "${subject}" -o -n "${subject_loc}" ] && [ -n "${blast_db}" -o -n "${gilist}" -o -n "${seqidlist}" -o -n "${negative_gilist}" -o -n "${db_soft_mask}" -o -n "${db_hard_mask}" ]
   then
     >&2 echo "subject is incompatible with: db, gilist, seqidlist, negative_gilist, db_soft_mask, db_hard_mask "
     debug
@@ -86,6 +86,7 @@ fi
 if [ -n "${SEARCHU}" ]
   then
     CMDLINEARG+="-import_search_strategy ${SEARCHU} "
+fi
 CMDLINEARG+="-query ${QUERYU} -out output "
 echo ${CMDLINEARG};
 chmod +x launch.sh
