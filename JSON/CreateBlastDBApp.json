@@ -41,7 +41,11 @@
     "details": { "label": "Mask data",
       "description": "Input files containing masking data as produced by NCBI masking applications (e.g. dustmasker, segmasker, windowmasker).",
       "showArgument": false
-    }},
+    },
+    "semantics": {
+      "maxCardinality": -1
+    }
+  },
       {"id": "taxid_map",
         "value": {
           "required": false,
@@ -51,6 +55,9 @@
           "label": "Text file mapping sequence IDs to taxonomy IDs.",
           "description": "Format: <SequenceId> <taxonomyId><newline>. Requires: parse_seqids. Incompatible with: taxid.",
           "showArgument": false
+        },
+        "semantics": {
+          "maxCardinality": 1
         }
       }
     ],
