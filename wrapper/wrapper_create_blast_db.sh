@@ -88,7 +88,7 @@ echo executable               =  ./launch.sh >> lib/condorSubmitEdit.htc #####
 echo arguments                          = ${CMDLINEARG} >> lib/condorSubmitEdit.htc
 echo transfer_input_files = ${INPUTSU}, launch.sh >> lib/condorSubmitEdit.htc
 #echo transfer_output_files = output >> lib/condorSubmitEdit.htc
-cat /mnt/data/apps/blastn/lib/condorSubmit.htc >> lib/condorSubmitEdit.htc
+cat /mnt/data/apps/create_blast_db/lib/condorSubmit.htc >> lib/condorSubmitEdit.htc
 
 less lib/condorSubmitEdit.htc
 
