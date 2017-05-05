@@ -176,7 +176,7 @@
       "value": {
         "type": "string",
         "visible": true,
-        "dafault": "output"
+        "dafault": "blastdb"
       },
       "details": {
         "label": "Name of blast database to be created",
