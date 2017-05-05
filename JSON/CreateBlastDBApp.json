@@ -1,0 +1,213 @@
+{
+  "name": "create_blast_db_2.2.31",
+  "label": "Create Blast Database",
+  "shortDescription": "Create BLAST Databases",
+  "longDescription": "Application to create BLAST databases, version 2.2.31+",
+  "helpURI": "ftp://ftp.ncbi.nlm.nih.gov/pub/factsheets/HowTo_BLASTGuide.pdf",
+  "datePublished": "",
+  "author":"Alice Minotto",
+  "version": "0.0.0",
+  "deploymentSystem": "cyverseUK-Storage2",
+  "deploymentPath": "/mnt/data/apps/create_blast_db",
+  "executionSystem": "cyverseUK-Batch2",
+  "executionType": "CLI",
+  "parallelism": "SERIAL",
+  "templatePath": "wrapper.sh",
+  "testPath": "test.sh",
+  "ontology": [ "http://edamontology.org/topic_0219",
+  "http://edamontology.org/operation_2508",
+  "http://edamontology.org/operation_0346",
+  "http://edamontology.org/operation_0338",
+  "http://edamontology.org/topic_0102"],
+  "tags": [ "CyverseUK" ],
+  "inputs": [
+    {"id": "input_file",
+    "value": {
+      "required": true,
+      "default": ""
+    },
+    "details": { "label": "Input file",
+      "description": "Input file/database name",
+      "showArgument": false
+    },
+    "semantics": {
+      "maxCardinality": 1
+    }},
+    {"id": "mask_data",
+    "value": {
+      "required": false,
+      "default": ""
+      },
+    "details": { "label": "Mask data",
+      "description": "Input files containing masking data as produced by NCBI masking applications (e.g. dustmasker, segmasker, windowmasker).",
+      "showArgument": false
+    }},
+      {"id": "taxid_map",
+        "value": {
+          "required": false,
+          "default": ""
+        },
+        "details": {
+          "label": "Text file mapping sequence IDs to taxonomy IDs.",
+          "description": "Format: <SequenceId> <taxonomyId><newline>. Requires: parse_seqids. Incompatible with: taxid.",
+          "showArgument": false
+        }
+      }
+    ],
+
+
+  "parameters": [
+    {"id": "dbtype",
+    "value": {
+      "type": "enumeration",
+      "visible": true,
+      "required": true,
+      "enumValues": [
+        "nucl",
+        "prot"]
+    },
+    "details": {
+      "label" : "Molecule type",
+      "description":"Molecule type of target db",
+      "showArgument": true,
+      "argument": "-dbtype "
+      }},
+    {"id": "input_type",
+    "value": {
+      "type": "enumeration",
+      "visible": true,
+      "enumValues": [ "asn1_bin",
+      "asn1_txt",
+      "blastdb",
+      "fasta"],
+      "default": "fasta"
+      },
+    "details": {
+      "label": "Input type",
+      "description": "Type of the data specified in input_file. Default 'fasta'.",
+      "showArgument": true,
+      "argument": "-input_type "
+      }},
+    {"id": "title",
+      "value": {
+        "type": "string",
+        "visible": true
+      },
+      "details": {
+        "label": "Title for BLAST database",
+        "description": "Default = input file name provided to -in argument",
+        "showArgument": true,
+        "argument": "-title "
+      }
+    },
+    {"id": "parse_seqids",
+      "value": {
+        "type": "flag",
+        "visible": true
+      },
+      "details": {
+        "label": "Parse seqid",
+        "description": "Option to parse seqid for FASTA input if set, for all other input types seqids are parsed automatically.",
+        "showArgument": true,
+        "argument": "-parse_seqids "
+      }
+    },
+    {"id": "hash_index",
+      "value": {
+        "type": "flag",
+        "visible": true
+      },
+      "details": {
+        "label": "Hash index",
+        "description": "Create index of sequence hash values.",
+        "showArgument": true,
+        "argument": "-hash_index "
+      }
+    },
+    {"id": "mask_id",
+      "value": {
+        "type": "string",
+        "visible": true
+      },
+      "details": {
+        "label": "Mask ID",
+        "description": "Comma-separated list of strings to uniquely identify the masking algorithm. Requires: mask_data. Incompatible with: gi_mask.",
+        "showArgument": true,
+        "argument": "-mask_id "
+      }
+    },
+    {"id": "mask_desc",
+      "value": {
+        "type": "string",
+        "visible": true
+      },
+      "details": {
+        "label": "Mask description",
+        "description": "Comma-separated list of free form strings to describe the masking algorithm details. Requires: mask_id.",
+        "showArgument": true,
+        "argument": "-mask_desc "
+      }
+    },
+    {"id": "gi_mask",
+      "value": {
+        "type": "flag",
+        "visible": true
+      },
+      "details": {
+        "label": "GI mask",
+        "description": "Create GI indexed masking data. Requires: parse_seqids. Incompatible with: mask_id.",
+        "showArgument": true,
+        "argument": "-gi_mask "
+      }
+    },
+    {"id": "gi_mask_name",
+      "value": {
+        "type": "string",
+        "visible": true
+      },
+      "details": {
+        "label": "GI mask name",
+        "description": "Comma-separated list of masking data output files. Requires: mask_data, gi_mask.",
+        "showArgument": true,
+        "argument": "-gi_mask_name "
+      }
+    },
+    {"id": "out",
+      "value": {
+        "type": "string",
+        "visible": true,
+        "dafault": "output"
+      },
+      "details": {
+        "label": "Name of blast database to be created",
+        "showArgument": true,
+        "argument": "-out "
+      }
+    },
+    {"id": "max_file_sz",
+      "value": {
+        "type": "string",
+        "visible": true,
+        "default": "1GB"
+      },
+      "details": {
+        "label": "Maximum file size for BLAST database files",
+        "showArgument": true,
+        "argument": "-max_file_sz "
+      }
+    },
+    {"id": "taxid",
+      "value": {
+        "type": "string",
+        "visible": true,
+        "validator": "^\\d+$"
+      },
+      "details": {
+        "label": "Taxonomy ID to assing to all sequences",
+        "description": "Incompatible with: taxid_map.",
+        "showArgument": true,
+        "argument": "-taxid "
+      }
+    }
+]
+}
