@@ -1,0 +1,11 @@
+{
+  "name" : "create_blast_db_2.2.31",
+  "appId" : "create_blast_db_2.2.31-0.0.0",
+  "archive" : false,
+  "inputs": {
+    "input_file" :  "http://de.cyverse.org/dl/d/94E27B1A-89A0-4EF9-A14A-8CF330D70AED/chr5.fas"
+  },
+  "parameters" : {
+    "dbtype": "nucl"
+  }
+}
