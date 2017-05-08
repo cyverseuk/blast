@@ -183,7 +183,7 @@
       "value": {
         "type": "string",
         "visible": true,
-        "dafault": "blastdb"
+        "default": "blastdb"
       },
       "details": {
         "label": "Name of blast database to be created",
