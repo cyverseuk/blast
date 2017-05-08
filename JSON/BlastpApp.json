@@ -1,0 +1,546 @@
+{
+  "name": "blastp_2.2.31",
+  "label": "Blastp",
+  "shortDescription": "protein BLAST",
+  "longDescription": "Traditional BLASTP to compare a protein query to a protein database.",
+  "helpURI": "ftp://ftp.ncbi.nlm.nih.gov/pub/factsheets/HowTo_BLASTGuide.pdf",
+  "datePublished": "",
+  "author":"Alice Minotto",
+  "version": "0.0.0",
+  "deploymentSystem": "cyverseUK-Storage2",
+  "deploymentPath": "/mnt/data/apps/blastp",
+  "executionSystem": "cyverseUK-Batch2",
+  "executionType": "CLI",
+  "parallelism": "SERIAL",
+  "templatePath": "wrapper.sh",
+  "testPath": "test.sh",
+  "ontology": [ "http://edamontology.org/operation_0495",
+    "http://edamontology.org/operation_2506",
+    "http://edamontology.org/operation_2509",
+    "http://edamontology.org/operation_0449",
+    "http://edamontology.org/operation_0259",
+    "http://edamontology.org/topic_0102" ],
+  "tags": [ "CyverseUK" ],
+  "inputs": [
+    {"id": "query",
+    "value": {
+      "required": true,
+      "default": ""
+    },
+    "details": { "label": "Input file",
+      "showArgument": false
+    },
+    "semantics": {
+      "maxCardinality": 1
+    }},
+    {"id": "blast_db",
+    "value": {
+      "required": false,
+      "default": ""
+      },
+    "details": { "label": "BLAST database.",
+      "description": "NAME FOLDER AS DB BASE NAME. Incompatible with: subject, subject_loc",
+      "showArgument": false
+    }},
+      {"id": "subject",
+        "value": {
+          "required": false,
+          "default": ""
+        },
+        "details": {
+          "label": "Subject sequence(s) to search",
+          "description": "Incompatible with:  db, gilist, seqidlist, negative_gilist, db_soft_mask, db_hard_mask",
+          "showArgument": false
+        }
+      },
+      {"id": "import_search_strategy",
+      "value": {
+        "required": false,
+        "default": ""
+        },
+      "details": { "label": "Search strategy to use",
+        "showArgument": false
+      }}
+    ],
+
+
+  "parameters": [
+    {"id": "query_loc",
+    "value": {
+      "type": "string",
+      "visible": true,
+      "validator": "^\\d+\\-\\d+$"
+    },
+    "details": {
+      "label" : "Query location",
+      "description":"Location on the query sequence in 1-based offsets (Format: start-stop)",
+      "showArgument": true,
+      "argument": "-query_loc "
+      }},
+    {"id": "task",
+      "value": {
+        "type": "enumeration",
+        "visible": true,
+        "enumValues": [
+        "blastp",
+        "blastp-fast",
+        "blastp-short"],
+        "default": "blastp"
+      },
+      "details": {
+        "label": "Task",
+        "description": "Task to execute. Default 'blastp'",
+        "showArgument": true,
+        "argument": "-task "
+      }
+    },
+    {"id": "evalue",
+      "value": {
+        "type": "string",
+        "visible": true,
+        "validator": "^1E\\-\\d+$|\\d+(\\.\\d+)?$"
+      },
+      "details": {
+        "label": "Expectation value (E) treshold",
+        "description": "Defualt 10.",
+        "showArgument": true,
+        "argument": "-evalue "
+      }
+    },
+    {"id": "word_size",
+      "value": {
+        "type": "string",
+        "visible": true,
+        "validator": "^[2-9]|\\d\\d+$"
+      },
+      "details": {
+        "label": "Word size",
+        "description": "Word size for wordfinder algorithm",
+        "showArgument": true,
+        "argument": "-word_size "
+      }
+    },
+    {"id": "gapopen",
+      "value": {
+        "type": "string",
+        "visible": true,
+        "validator": "^\\d+$"
+      },
+      "details": {
+        "label": "Cost to open a gap (integer)",
+        "showArgument": true,
+        "argument": "-gapopen "
+      }
+    },
+    {"id": "gapextend",
+      "value": {
+        "type": "string",
+        "visible": true,
+        "validator": "^\\d+$"
+      },
+      "details": {
+        "label": "Cost to extend a gap (integer)",
+        "showArgument": true,
+        "argument": "-gapextend "
+      }
+    },
+    {"id": "matrix",
+      "value": {
+        "type": "string",
+        "visible": true
+      },
+      "details": {
+        "label": "Scoring matrix name",
+        "description": "normally BLOSUM62",
+        "showArgument": true,
+        "argument": "-matrix "
+      }
+    },
+    {"id": "threshold",
+      "value": {
+        "type": "string",
+        "visible": true,
+        "validator": "^1E\\-\\d+$|\\d+(\\.\\d+)?$"
+      },
+      "details": {
+        "label": "Threshold",
+        "description": "Minimum word score such that the word is added to the BLAST lookup table. (real)",
+        "showArgument": true,
+        "argument": "-threshold "
+      }
+    },
+    {"id": "comp_based_stats",
+      "value": {
+        "type": "enumeration",
+        "visible": true,
+        "enumValues": [
+          {"D": "default"},
+          {"0": "no composition-based statistics"},
+          {"1": "composition-based statistics as in NAR 29:2994-3005, 2001"},
+          {"2": "composition-based score adjustment as in Bioinformatics 21:902-911, 2005, conditioned on sequence properties"},
+          {"3": "composition-based score adjustment as in Bioinformatics 21:902-911, 2005, unconditionally"}
+        ],
+        "default": "D"
+      },
+      "details": {
+        "label": "composition-based statistics",
+        "description": "deafult is equivalent to Bioinformatics 21:902-911, 2005",
+        "showArgument": true,
+        "argument": "-comp_based_stats "
+      }
+    },
+    {"id": "subject_loc",
+      "value": {
+        "type": "string",
+        "visible": true,
+        "validator": "^\\d+\\-\\d+$"
+      },
+      "details": {
+        "label": "Location on the subject sequence",
+        "description": "in 1-based offsets (Format: start-stop). Incompatible with: db, gilist, seqidlist, negative_gilist, db_soft_mask, db_hard_mask",
+        "showArgument": true,
+        "argument": "-subject_loc "
+      }
+    },
+    {"id": "outfmt",
+      "value": {
+        "type": "string",
+        "visible": true,
+        "default": "0"
+      },
+      "details": {
+        "label": "Alignment view option",
+        "description": "0 = pairwise, 1 = query-anchored showing identities, 2 = query-anchored no identities, 3 = flat query-anchored, show identities, 4 = flat query-anchored, no identities, 5 = XML Blast output, 6 = tabular, 7 = tabular with comment lines, 8 = Text ASN.1, 9 = Binary ASN.1, 10 = Comma-separated values, 11 = BLAST archive format (ASN.1), 12 = JSON Seqalign output, 13 = JSON Blast output, 14 = XML2 Blast output. Options 6, 7, and 10 can be additionally configured to produce a custom format specified by space delimited format specifiers. (see guide)",
+        "showArgument": true,
+        "argument": "-outfmt "
+      }
+    },
+    {"id": "show_gis",
+      "value": {
+        "type": "flag",
+        "visible": true
+      },
+      "details": {
+        "label": "Show NCBI GIs in deflines",
+        "showArgument": true,
+        "argument": "-show_gis "
+      }
+    },
+    {"id": "num_descriptions",
+      "value": {
+        "type": "number",
+        "visible": true,
+        "validator": "^\\d+$",
+        "default": 500
+      },
+      "details": {
+        "label": "Number of database sequences to show descriptions for",
+        "description": "Not applicable for outfmt > 4. Incompatible with: max_target_seqs",
+        "showArgument": true,
+        "argument": "-num_descriptions "
+      }
+    },
+    {"id": "num_alignments",
+      "value": {
+        "type": "number",
+        "visible": true,
+        "validator": "^\\d+$",
+        "default": 250
+      },
+      "details": {
+        "label": "Number of database sequences to show alignments for",
+        "description": "Incompatible with:  max_target_seqs",
+        "showArgument": true,
+        "argument": "-num_alignments "
+      }
+    },
+    {"id": "line_length",
+      "value": {
+        "type": "number",
+        "visible": true,
+        "validator": "^[1-9]|\\d\\d+$",
+        "default": 60
+      },
+      "details": {
+        "label": "Line length",
+        "description": "Not applicable for outfmt > 4",
+        "showArgument": true,
+        "argument": "-line_length "
+      }
+    },
+    {"id": "html",
+      "value": {
+        "type": "flag",
+        "visible": true
+      },
+      "details": {
+        "label": "Produce HTML",
+        "showArgument": true,
+        "argument": "-html "
+      }
+    },
+    {"id": "seg",
+      "value": {
+        "type": "string",
+        "visible": true,
+        "validator": "^(yes|no|\\d+\\s\\d+\\s\\d+)$"
+      },
+      "details": {
+        "label": "Filter with SEG",
+        "description": "Filter query sequence with SEG (Format: 'yes', 'window locut hicat', or 'no' to disable). Default = 'no'",
+        "showArgument": true,
+        "argument": "-get "
+      }
+    },
+    {"id": "soft_masking",
+      "value": {
+        "type": "bool",
+        "visible": true,
+        "default": false
+      },
+      "details": {
+        "label": "Soft Masking",
+        "description": "Apply filtering locations as soft masks",
+        "showArgument": true,
+        "argument": "-soft_masking "
+      }
+    },
+    {"id": "lcase_masking",
+      "value": {
+        "type": "flag",
+        "visible": true
+      },
+      "details": {
+        "label": "Lower Case Masking",
+        "description": "Use lower case filtering in query and subject sequence(s)",
+        "showArgument": true,
+        "argument": "-lcase_masking "
+      }
+    },
+    {"id": "gilist",
+      "value": {
+        "type": "string",
+        "visible": true
+      },
+      "details": {
+        "label": "GI list",
+        "description": "Restrict search of database to list of GI's. Incompatible with:  negative_gilist, seqidlist, subject, subject_loc",
+        "showArgument": true,
+        "argument": "-gilist "
+      }
+    },
+    {"id": "seqidlist",
+      "value": {
+        "type": "string",
+        "visible": true
+      },
+      "details": {
+        "label": "SeqId list",
+        "description": "Restrict search of database to list of SeqId's. Incompatible with: gilist, negative_gilist, subject, subject_loc",
+        "showArgument": true,
+        "argument": "-seqidlist "
+      }
+    },
+    {"id": "negative_gilist",
+      "value": {
+        "type": "string",
+        "visible": true
+      },
+      "details": {
+        "label": "Negative GI list",
+        "description": "Restrict search of database to everything except the listed GIs. Incompatible with:  gilist, seqidlist, subject, subject_loc",
+        "showArgument": true,
+        "argument": "-negative_gilist "
+      }
+    },
+    {"id": "db_soft_mask",
+      "value": {
+        "type": "string",
+        "visible": true
+      },
+      "details": {
+        "label": "DB soft mask",
+        "description": "Filtering algorithm ID to apply to the BLAST database as soft masking. Incompatible with:  db_hard_mask, subject, subject_loc",
+        "showArgument": true,
+        "argument": "-db_soft_mask "
+      }
+    },
+    {"id": "db_hard_mask",
+      "value": {
+        "type": "string",
+        "visible": true
+      },
+      "details": {
+        "label": "DB hard mask",
+        "description": "Filtering algorithm ID to apply to the BLAST database as hard masking. Incompatible with:  db_hard_mask, subject, subject_loc",
+        "showArgument": true,
+        "argument": "-db_hard_mask "
+      }
+    },
+    {"id": "qcov_hsp_perc",
+      "value": {
+        "type": "string",
+        "visible": true,
+        "validator": "^(\\d{1,2}|(100))$"
+      },
+      "details": {
+        "label": "Percent query coverage per hsp",
+        "showArgument": true,
+        "argument": "-qcov_hsp_perc "
+      }
+    },
+    {"id": "max_hsps",
+      "value": {
+        "type": "string",
+        "visible": true,
+        "validator": "^([1-9]|\\d\\d+)$"
+      },
+      "details": {
+        "label": "Max HSPs",
+        "description": "Set maximum number of HSPs per subject sequence to save for each query",
+        "showArgument": true,
+        "argument": "-max_hsps "
+      }
+    },
+    {"id": "culling_limit",
+      "value": {
+        "type": "string",
+        "visible": true,
+        "validator": "^\\d+$"
+      },
+      "details": {
+        "label": "Culling limit",
+        "description": "If the query range of a hit is enveloped by that of at least this many higher-scoring hits, delete the hit. Incompatible with:  best_hit_overhang, best_hit_score_edge",
+        "showArgument": true,
+        "argument": "-culling_limit "
+      }
+    },
+    {"id": "best_hit_overhang",
+      "value": {
+        "type": "string",
+        "visible": true,
+        "validator": "^0\\.(0+[1-9]+|[1-4]+\\d*)$"
+      },
+      "details": {
+        "label": "Best Hit Overhang",
+        "description": "Best Hit algorithm overhang value (recommended value: 0.1). Incompatible with:  culling_limit",
+        "showArgument": true,
+        "argument": "-best_hit_overhang "
+      }
+    },
+    {"id": "best_hit_score_edge",
+      "value": {
+        "type": "string",
+        "visible": true,
+        "validator": "^0\\.(0+[1-9]+|[1-4]+\\d*)$"
+      },
+      "details": {
+        "label": "Best Hit Score Edge",
+        "description": "Best Hit algorithm score edge value (recommended value: 0.1). Incompatible with:  culling_limit",
+        "showArgument": true,
+        "argument": "-best_hit_score_edge "
+      }
+    },
+    {"id": "max_target_seqs",
+      "value": {
+        "type": "number",
+        "visible": true,
+        "validator": "^[1-9]\\d*$",
+        "default": 500
+      },
+      "details": {
+        "label": "Best Hit Score Edge",
+        "description": "Maximum number of aligned sequences to keep. Not applicable for outfmt <= 4. Incompatible with:  num_descriptions, num_alignments",
+        "showArgument": true,
+        "argument": "-max_target_seqs "
+      }
+    },
+    {"id": "xdrop_ungap",
+      "value": {
+        "type": "string",
+        "visible": true,
+        "validator": "^\\d+(\\.\\d+)?$"
+      },
+      "details": {
+        "label": "X-dropoff value ungap",
+        "description": "X-dropoff value (in bits) for ungapped extensions",
+        "showArgument": true,
+        "argument": "-xdrop_ungap "
+      }
+    },
+    {"id": "xdrop_gap",
+      "value": {
+        "type": "string",
+        "visible": true,
+        "validator": "^\\d+(\\.\\d+)?$"
+      },
+      "details": {
+        "label": "X-dropoff value gap",
+        "description": "X-dropoff value (in bits) for preliminary gapped extensions",
+        "showArgument": true,
+        "argument": "-xdrop_gap "
+      }
+    },
+    {"id": "xdrop_gap_final",
+      "value": {
+        "type": "string",
+        "visible": true,
+        "validator": "^\\d+(\\.\\d+)?$"
+      },
+      "details": {
+        "label": "X-dropoff value final",
+        "description": "X-dropoff value (in bits) for final gapped alignment",
+        "showArgument": true,
+        "argument": "-xdrop_gap_final "
+      }
+    },
+    {"id": "ungapped",
+      "value": {
+        "type": "flag",
+        "visible": true
+      },
+      "details": {
+        "label": "Perform ungapped alignment only",
+        "showArgument": true,
+        "argument": "-ungapped "
+      }
+    },
+    {"id": "window_size",
+      "value": {
+        "type": "string",
+        "visible": true,
+        "validator": "^\\d+$"
+      },
+      "details": {
+        "label": "Window size",
+        "description": "Multiple hits window size, use 0 to specify 1-hit algorithm",
+        "showArgument": true,
+        "argument": "-window_size "
+      }
+    },
+    {"id": "parse_deflines",
+      "value": {
+        "type": "flag",
+        "visible": true
+      },
+      "details": {
+        "label": "Parse deflines",
+        "description": "Should the query and subject defline(s) be parsed?",
+        "showArgument": true,
+        "argument": "-parse_deflines "
+      }
+    },
+    {"id": "use_sw_tback",
+      "value": {
+        "type": "flag",
+        "visible": true
+      },
+      "details": {
+        "label": "Use Smith-Waterman",
+        "description": "Compute locally optimal Smith-Waterman alignments",
+        "showArgument": true,
+        "argument": "-use_sw_tback "
+      }
+    }
+]
+}
