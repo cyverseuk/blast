@@ -87,7 +87,7 @@ if [ -n "${SEARCHU}" ]
   then
     CMDLINEARG+="-import_search_strategy ${SEARCHU} "
 fi
-CMDLINEARG+="-query ${QUERYU} -out output "
+CMDLINEARG+="-num_threads 16 -query ${QUERYU} -out output "
 echo ${CMDLINEARG};
 chmod +x launch.sh
 
