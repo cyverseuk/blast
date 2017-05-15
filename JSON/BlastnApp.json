@@ -103,7 +103,7 @@
         "default": "megablast"
       },
       "details": {
-        "label": "~Task",
+        "label": "Task",
         "description": "Task to execute. Default 'megablast'",
         "showArgument": true,
         "argument": "-task "
@@ -244,10 +244,10 @@
     },
     {"id": "num_descriptions",
       "value": {
-        "type": "number",
+        "type": "string",
         "visible": true,
         "validator": "^\\d+$",
-        "default": 500
+        "default": "500"
       },
       "details": {
         "label": "Number of database sequences to show descriptions for",
@@ -258,10 +258,10 @@
     },
     {"id": "num_alignments",
       "value": {
-        "type": "number",
+        "type": "string",
         "visible": true,
         "validator": "^\\d+$",
-        "default": 250
+        "default": "250"
       },
       "details": {
         "label": "Number of database sequences to show alignments for",
@@ -496,10 +496,10 @@
     },
     {"id": "max_target_seqs",
       "value": {
-        "type": "number",
+        "type": "string",
         "visible": true,
         "validator": "^[1-9]\\d*$",
-        "default": 500
+        "default": "500"
       },
       "details": {
         "label": "Best Hit Score Edge",
