@@ -228,10 +228,10 @@
     },
     {"id": "num_descriptions",
       "value": {
-        "type": "number",
+        "type": "string",
         "visible": true,
         "validator": "^\\d+$",
-        "default": 500
+        "default": "500"
       },
       "details": {
         "label": "Number of database sequences to show descriptions for",
@@ -242,10 +242,10 @@
     },
     {"id": "num_alignments",
       "value": {
-        "type": "number",
+        "type": "string",
         "visible": true,
         "validator": "^\\d+$",
-        "default": 250
+        "default": "250"
       },
       "details": {
         "label": "Number of database sequences to show alignments for",
@@ -256,10 +256,10 @@
     },
     {"id": "line_length",
       "value": {
-        "type": "number",
+        "type": "string",
         "visible": true,
         "validator": "^[1-9]|\\d\\d+$",
-        "default": 60
+        "default": "60"
       },
       "details": {
         "label": "Line length",
@@ -443,10 +443,10 @@
     },
     {"id": "max_target_seqs",
       "value": {
-        "type": "number",
+        "type": "string",
         "visible": true,
         "validator": "^[1-9]\\d*$",
-        "default": 500
+        "default": "500"
       },
       "details": {
         "label": "Best Hit Score Edge",
