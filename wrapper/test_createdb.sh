@@ -42,8 +42,9 @@ assert_fail "`mask_desc='list of strings' ../wrapper_create_blast_db.sh 2>&1 >/d
 try "gi_mask requires parse_seqids for FASTA"
 assert_fail "`gi_mask='-gi_mask ' input_type='-input_type fasta' ../wrapper_create_blast_db.sh 2>&1 >/dev/null`" "gi_mask requires parse_seqids."
 
+#this is a workaround, the script would fail sooner otherwise
 try "gi_mask doesn't require parse_seqids if not FASTA"
-#placeholder
+assert_fail "`gi_mask='-gi_mask ' ../wrapper_create_blast_db.sh 2>&1 >/dev/null`" "chmod: cannot access 'launch.sh"
 
 try "gi_mask_name requires gi_mask"
 assert_fail "`gi_mask_name='list of strings' ../wrapper_create_blast_db.sh 2>&1 >/dev/null`" "gi_mask_name requires mask_data and gi_mask."
@@ -57,7 +58,8 @@ assert_fail "`taxid_map=filename taxid=id ../wrapper_create_blast_db.sh 2>&1 >/d
 try "taxid_map requires parse_seqids for FASTA"
 assert_fail "`taxid_map=defined_file input_type='-input_type fasta' ../wrapper_create_blast_db.sh 2>&1 >/dev/null`" "taxid_map requires parse_seqids."
 
+#this is a workaround, the script would fail sooner otherwise
 try "taxid_map doesn't require parse_seqids if input is not fasta"
-#placeholder
+assert_fail "`taxid_map=defined_file ../wrapper_create_blast_db.sh 2>&1 >/dev/null`" "chmod: cannot access 'launch.sh"
 
 echo; echo "PASS: $tests_run tests run"
