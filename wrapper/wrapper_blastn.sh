@@ -77,7 +77,7 @@ CMDLINEARG=""
 CMDLINEARG+="blastn ${ARGSU} "
 if [ -n "${BLASTDBU}" ]
   then
-    CMDLINEARG+="-db ${BLASTDBU} "
+    CMDLINEARG+="-db ${BLASTDBU}/${BLASTDBU} "
 fi
 if [ -n "${SUBJECTU}" ]
   then
@@ -113,3 +113,4 @@ condor_tail -f $jobid
 debug
 
 exit 0
+
